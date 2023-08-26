@@ -21,6 +21,7 @@ import { join } from 'path';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      installSubscriptionHandlers: true,
     }),
     UserModule,
     MessageModule,
@@ -28,4 +29,4 @@ import { join } from 'path';
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule { }

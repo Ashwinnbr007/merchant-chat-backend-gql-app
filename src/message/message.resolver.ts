@@ -1,19 +1,43 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, Subscription } from '@nestjs/graphql';
 import { MessageService } from './message.service';
 import { Message } from './entities/message.entity';
 import { CreateMessageInput } from './dto/create-message.input';
 import { UpdateMessageInput } from './dto/update-message.input';
 import { NotFoundException } from '@nestjs/common/exceptions';
+import { PubSub } from 'graphql-subscriptions';
 
 @Resolver(() => Message)
 export class MessageResolver {
-  constructor(private readonly messageService: MessageService) {}
+  private pubSub: PubSub;
+  constructor(private readonly messageService: MessageService) {
+    this.pubSub = new PubSub();
+  }
 
   @Mutation(() => Message)
   createMessage(
     @Args('createMessageInput') createMessageInput: CreateMessageInput,
   ) {
-    return this.messageService.create(createMessageInput);
+    const newMessage = this.messageService.create(createMessageInput);
+    this.pubSub.publish('listenToAllMessages', { listenToAllMessages: newMessage });
+    this.pubSub.publish('listenToAMessage', { listenToAMessage: newMessage });
+    return newMessage;
+  }
+
+  @Subscription(returns => Message, {
+    name: 'listenToAllMessages',
+  })
+  messageAdded() {
+    return this.pubSub.asyncIterator('listenToAllMessages');
+  }
+
+  @Subscription(returns => Message, {
+    name: 'listenToAMessage',
+    filter: (payload, variables) => {
+      return payload.listenToAMessage.userId === variables.userId;
+    },
+  })
+  userMessage(@Args('userId') userId: number) {
+    return this.pubSub.asyncIterator('listenToAMessage');
   }
 
   @Query(() => [Message], { name: 'messages' })
