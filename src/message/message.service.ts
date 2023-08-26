@@ -9,7 +9,7 @@ import { Repository } from 'typeorm';
 export class MessageService {
   constructor(
     @InjectRepository(Message) private messageRepository: Repository<Message>,
-  ) { }
+  ) {}
 
   create(createMessageInput: CreateMessageInput) {
     const newMessage = this.messageRepository.create(createMessageInput);
@@ -20,8 +20,14 @@ export class MessageService {
     return this.messageRepository.find();
   }
 
+  async findAllByUserId(userId: number): Promise<Message[]> {
+    return await this.messageRepository.find({ where: { userId: userId } });
+  }
+
   async findOne(messageId: number): Promise<Message> {
-    return this.messageRepository.findOneOrFail({ where: { messageId } });
+    return this.messageRepository.findOneOrFail({
+      where: { messageId: messageId },
+    });
   }
 
   update(messageId: number, updateMessageInput: UpdateMessageInput) {

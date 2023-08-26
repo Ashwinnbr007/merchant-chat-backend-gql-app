@@ -2,14 +2,18 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Message {
+  messageId: Int!
+  userId: Int!
+  message: String!
+}
+
 type User {
   userId: Int!
   userName: String!
-}
-
-type Message {
-  messageId: Int!
-  message: String!
+  messages: [Message!]
+  findMessages: [Message!]!
+  findMessage(messageId: Int!): Message!
 }
 
 type Query {
@@ -40,9 +44,11 @@ input UpdateUserInput {
 input CreateMessageInput {
   """Content of the message"""
   message: String!
+  userId: Int!
 }
 
 input UpdateMessageInput {
   message: String!
+  userId: Int
   messageId: Int!
 }
