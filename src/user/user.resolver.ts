@@ -3,6 +3,7 @@ import { UserService } from './user.service';
 import { User } from './entities/user.entity';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
+import { InternalServerErrorException } from '@nestjs/common';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -29,8 +30,13 @@ export class UserResolver {
   }
 
   @Mutation(() => String)
-  removeUser(@Args('userId', { type: () => Int }) userId: number) {
+  async removeUser(@Args('userId', { type: () => Int }) userId: number) {
+    try {
+      await this.userService.findOne(userId);
+    } catch {
+      return `User with userId ${userId} not found`;
+    }
     this.userService.remove(userId);
-    return `User with user id ${userId} removed successfully`;
+    return `User with userId ${userId} removed`;
   }
 }
