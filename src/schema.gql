@@ -13,12 +13,14 @@ type Message {
 }
 
 type Query {
+  users: [User!]!
   user(userID: Int!): User!
   message(id: Int!): Message!
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
   createMessage(createMessageInput: CreateMessageInput!): Message!
   updateMessage(updateMessageInput: UpdateMessageInput!): Message!
   removeMessage(id: Int!): Message!
@@ -27,6 +29,11 @@ type Mutation {
 input CreateUserInput {
   """Name of the user"""
   userName: String!
+}
+
+input UpdateUserInput {
+  userName: String!
+  userId: Int!
 }
 
 input CreateMessageInput {

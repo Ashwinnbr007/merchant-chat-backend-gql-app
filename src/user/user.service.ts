@@ -25,8 +25,9 @@ export class UserService {
     return this.userRepository.findOneOrFail({ where: { userId } });
   }
 
-  update(id: number, updateUserInput: UpdateUserInput) {
-    return `This action updates a #${id} user`;
+  update(userId: number, updateUserInput: UpdateUserInput) {
+    this.userRepository.update(userId, updateUserInput);
+    return this.userRepository.findOneOrFail({ where: { userId } });
   }
 
   remove(id: number) {
