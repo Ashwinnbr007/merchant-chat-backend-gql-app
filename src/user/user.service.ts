@@ -30,7 +30,7 @@ export class UserService {
     return this.userRepository.findOneOrFail({ where: { userId } });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  remove(userId: number) {
+    return this.userRepository.delete(userId);
   }
 }
