@@ -1,26 +1,35 @@
 import { Injectable } from '@nestjs/common';
 import { CreateMessageInput } from './dto/create-message.input';
 import { UpdateMessageInput } from './dto/update-message.input';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Message } from './entities/message.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class MessageService {
+  constructor(
+    @InjectRepository(Message) private messageRepository: Repository<Message>,
+  ) { }
+
   create(createMessageInput: CreateMessageInput) {
-    return 'This action adds a new message';
+    const newMessage = this.messageRepository.create(createMessageInput);
+    return this.messageRepository.save(newMessage);
   }
 
-  findAll() {
-    return `This action returns all message`;
+  async findAll(): Promise<Message[]> {
+    return this.messageRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} message`;
+  async findOne(messageId: number): Promise<Message> {
+    return this.messageRepository.findOneOrFail({ where: { messageId } });
   }
 
-  update(id: number, updateMessageInput: UpdateMessageInput) {
-    return `This action updates a #${id} message`;
+  update(messageId: number, updateMessageInput: UpdateMessageInput) {
+    this.messageRepository.update(messageId, updateMessageInput);
+    return this.messageRepository.findOneOrFail({ where: { messageId } });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} message`;
+  remove(userId: number) {
+    return this.messageRepository.delete(userId);
   }
 }

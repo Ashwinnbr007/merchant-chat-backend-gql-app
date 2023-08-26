@@ -1,9 +1,9 @@
-import { Resolver, Query, Mutation, Args, Int, ObjectType } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { UserService } from './user.service';
 import { User } from './entities/user.entity';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
-import { InternalServerErrorException } from '@nestjs/common';
+import { NotFoundException } from '@nestjs/common/exceptions';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -25,7 +25,14 @@ export class UserResolver {
   }
 
   @Mutation(() => User)
-  updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
+  async updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
+    try {
+      await this.userService.findOne(updateUserInput.userId);
+    } catch {
+      throw new NotFoundException(
+        `User with userId ${updateUserInput.userId} not found`,
+      );
+    }
     return this.userService.update(updateUserInput.userId, updateUserInput);
   }
 

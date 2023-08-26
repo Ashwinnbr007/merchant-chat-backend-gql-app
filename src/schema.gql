@@ -8,23 +8,23 @@ type User {
 }
 
 type Message {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  messageId: Int!
+  message: String!
 }
 
 type Query {
   users: [User!]!
   user(userID: Int!): User!
-  message(id: Int!): Message!
+  messages: [Message!]!
+  message(messageId: Int!): Message!
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
-  removeUser(userId: Int!): String!
+  removeUser(messageId: Int!): String!
   createMessage(createMessageInput: CreateMessageInput!): Message!
   updateMessage(updateMessageInput: UpdateMessageInput!): Message!
-  removeMessage(id: Int!): Message!
 }
 
 input CreateUserInput {
@@ -38,12 +38,11 @@ input UpdateUserInput {
 }
 
 input CreateMessageInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  """Content of the message"""
+  message: String!
 }
 
 input UpdateMessageInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  message: String!
+  messageId: Int!
 }
