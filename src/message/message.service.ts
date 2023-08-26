@@ -9,7 +9,7 @@ import { Repository } from 'typeorm';
 export class MessageService {
   constructor(
     @InjectRepository(Message) private messageRepository: Repository<Message>,
-  ) {}
+  ) { }
 
   create(createMessageInput: CreateMessageInput) {
     const newMessage = this.messageRepository.create(createMessageInput);
@@ -35,7 +35,7 @@ export class MessageService {
     return this.messageRepository.findOneOrFail({ where: { messageId } });
   }
 
-  remove(userId: number) {
-    return this.messageRepository.delete(userId);
+  remove(messageId: number) {
+    return this.messageRepository.delete(messageId);
   }
 }
