@@ -1,0 +1,41 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  userId: Int!
+  userName: String!
+}
+
+type Message {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type Query {
+  user(userID: Int!): User!
+  message(id: Int!): Message!
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): User!
+  createMessage(createMessageInput: CreateMessageInput!): Message!
+  updateMessage(updateMessageInput: UpdateMessageInput!): Message!
+  removeMessage(id: Int!): Message!
+}
+
+input CreateUserInput {
+  """Name of the user"""
+  userName: String!
+}
+
+input CreateMessageInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateMessageInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
