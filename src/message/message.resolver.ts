@@ -14,11 +14,13 @@ export class MessageResolver {
   }
 
   @Mutation(() => Message)
-  createMessage(
+  async createMessage(
     @Args('createMessageInput') createMessageInput: CreateMessageInput,
   ) {
-    const newMessage = this.messageService.create(createMessageInput);
-    this.pubSub.publish('listenToAllMessages', { listenToAllMessages: newMessage });
+    const newMessage = await this.messageService.create(createMessageInput);
+    this.pubSub.publish('listenToAllMessages', {
+      listenToAllMessages: newMessage,
+    });
     this.pubSub.publish('listenToAMessage', { listenToAMessage: newMessage });
     return newMessage;
   }
