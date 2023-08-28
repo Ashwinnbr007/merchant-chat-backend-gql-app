@@ -26,9 +26,10 @@ type Query {
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
-  removeUser(messageId: Int!): String!
+  removeUser(userId: Int!): String!
   createMessage(createMessageInput: CreateMessageInput!): Message!
   updateMessage(updateMessageInput: UpdateMessageInput!): Message!
+  removeMessage(messageId: Int!): String!
 }
 
 input CreateUserInput {

@@ -70,7 +70,7 @@ export class MessageResolver {
   }
 
   @Mutation(() => String)
-  async removeUser(@Args('messageId', { type: () => Int }) messageId: number) {
+  async removeMessage(@Args('messageId', { type: () => Int }) messageId: number) {
     try {
       await this.messageService.findOne(messageId);
     } catch {

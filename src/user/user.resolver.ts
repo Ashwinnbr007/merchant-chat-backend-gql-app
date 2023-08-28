@@ -4,8 +4,8 @@ import { User } from './entities/user.entity';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { NotFoundException } from '@nestjs/common/exceptions';
-import { MessageService } from 'src/message/message.service';
-import { Message } from 'src/message/entities/message.entity';
+import { MessageService } from '../message/message.service';
+import { Message } from '../message/entities/message.entity';
 
 @Resolver(() => User)
 export class UserResolver {
