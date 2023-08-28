@@ -5,7 +5,8 @@ import { AppModule } from '../src/app.module';
 
 describe('UserResolver (e2e)', () => {
   let app: INestApplication;
-  let server;
+let server;
+    let allTestsCompleted = false;    
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -15,10 +16,6 @@ describe('UserResolver (e2e)', () => {
     app = moduleFixture.createNestApplication();
     await app.init();
     server = app.getHttpServer();
-  });
-
-  afterAll(async () => {
-    await app.close();
   });
 
   describe('User Endpoints', () => {
