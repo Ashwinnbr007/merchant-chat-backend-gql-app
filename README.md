@@ -43,6 +43,9 @@ The application also takes care of real-time chat using graphql-subscriptions an
 ### Citations
 
 [E2E Test](https://www.youtube.com/watch?v=LaJi0Gv6T3Q)
+
 [Subscriptions](https://youtu.be/7-eEAJkzYgw?si=QscuXNJyMM67ZDaj)
+
 [nestJs Documentation](https://docs.nestjs.com/)
+
 [nestJs basics](https://youtu.be/iADUPukJlgY?si=435AAUDgxJR9J5Ap)
