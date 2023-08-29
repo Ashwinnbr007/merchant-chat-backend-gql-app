@@ -37,7 +37,7 @@ The application also takes care of real-time chat using graphql-subscriptions an
 
 
 ## Demo of the application 
-[Application Demo](https://www.youtube.com)
+[Application Demo](https://www.loom.com/share/2c34157466cc473285cdc576d8e71d5a?sid=31ba0817-4910-4152-8841-857ac46215c7)
 
 
 ### Citations
